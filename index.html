@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Explorando Marte</title>
+    <link rel="stylesheet" href="estilos.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Bungee|Open+Sans:400&display=swap"
+    />
+  </head>
+  <body>
+    <script src="./index.js"></script>
+    <h1>Explorando Marte</h1>
+    <p>
+      Um conjunto de sondas foi enviado à Marte e irá pousar num planalto. Esse
+      planalto, que curiosamente é retangular, deve ser explorado pelas sondas
+      para que suas câmeras embutidas consigam ter uma visão completa da área e
+      enviar as imagens de volta para a Terra.
+    </p>
+    <p>
+      A posição e direção de uma sonda são representadas por uma combinação de
+      coordenadas x-y e uma letra representando a direção cardinal para qual a
+      sonda aponta, seguindo a rosa dos ventos em inglês.
+    </p>
+    <p>
+      O planalto é dividido numa malha para simplificar a navegação. Um exemplo
+      de posição seria (0, 0, N), que indica que a sonda está no canto inferior
+      esquerdo e apontando para o Norte.
+    </p>
+    <p>
+      Para controlar as sondas, a NASA envia uma simples sequência de letras. As
+      letras possíveis são "L", "R" e "M". Destas, "L" e "R" fazem a sonda virar
+      90 graus para a esquerda ou direita, respectivamente, sem mover a sonda.
+      "M" faz com que a sonda mova-se para a frente um ponto da malha, mantendo
+      a mesma direção.
+    </p>
+    <p>
+      Nesta malha o ponto ao norte de (x,y) é sempre (x, y+1). Este programa
+      processa uma série de instruções enviadas para as sondas que estão
+      explorando este planalto.
+    </p>
+    <p>Envie as instruções e veja os resultados.</p>
+    <div class="row">
+      <div class="column">
+        <h2>Instruções</h2>
+        <textarea rows="6" cols="20" id="entrada"></textarea>
+        <button id="enviar">Enviar instruções</button>
+      </div>
+      <div class="column">
+        <h2>Resultados</h2>
+        <textarea
+          placeholder="aguardando instruções..."
+          rows="6"
+          cols="20"
+          readonly
+          id="saida"
+        ></textarea>
+      </div>
+    </div>
+  </body>
+</html>

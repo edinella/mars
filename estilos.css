@@ -1,0 +1,49 @@
+body {
+  background: #435d70;
+  color: #97aebf;
+  font-family: "Open Sans", sans-serif;
+  margin: 0;
+  padding: 3%;
+  text-align: center;
+}
+h1,
+h2 {
+  font-family: "Bungee", cursive;
+  color: #223744;
+}
+h1 {
+  font-size: 40px;
+}
+h2 {
+  font-size: 30px;
+}
+p {
+  text-align: left;
+}
+textarea {
+  background: #97aebf;
+  color: #223744;
+  font-size: 15px;
+  border: 0;
+  border-radius: 5px;
+  padding: 10px 5%;
+  width: 85%;
+}
+textarea#saida {
+  background: #223744;
+  color: #97aebf;
+}
+button {
+  background: #223744;
+  color: #97aebf;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 10px 5%;
+}
+.row {
+  display: flex;
+}
+.column {
+  flex: 50%;
+}
