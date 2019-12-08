@@ -1,17 +1,28 @@
 /*eslint no-cond-assign: "error"*/
-export const processaInstrucoes = instrucoes => {
-  // planalto
-  let [, planaltoX, planaltoY] = instrucoes.match(/^\s*(\d)\s*(\d)\s*$/m);
 
-  // sondas
+export const enviaInstrucoes = instrucoes => {
+  let planalto = extraiPlanalto(instrucoes);
+  let sondas = extraiSondas(instrucoes);
+  console.log({ planalto, sondas });
+  return instrucoes;
+};
+
+export const extraiPlanalto = instrucoes => {
+  let [, x, y] = instrucoes.match(/^\s*(\d)\s*(\d)\s*$/m);
+  x = parseInt(x, 10);
+  y = parseInt(y, 10);
+  return { x, y };
+};
+
+export const extraiSondas = instrucoes => {
   const sondaExp = /^\s*(\d)\s*(\d)\s*([NESW])\s*\n?\s*([LRM]*)\s*$/gm;
   let sondas = [];
   let matches;
   while ((matches = sondaExp.exec(instrucoes)) !== null) {
-    let [, sondaX, sondaY, sondaD, sondaI] = matches;
-    sondas.push({ sondaX, sondaY, sondaD, sondaI });
+    let [, x, y, d, instrucoes] = matches;
+    x = parseInt(x, 10);
+    y = parseInt(y, 10);
+    sondas.push({ x, y, d, instrucoes });
   }
-  console.log({ planaltoX, planaltoY, sondas });
-
-  return instrucoes;
+  return sondas;
 };
