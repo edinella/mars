@@ -3,8 +3,9 @@
 export const enviaInstrucoes = instrucoes => {
   let planalto = extraiPlanalto(instrucoes);
   let sondas = extraiSondas(instrucoes);
-  console.log({ planalto, sondas });
-  return instrucoes;
+  let sondasPosicionadas = sondas.map(posicionaSondas);
+  console.log({ planalto, sondas, sondasPosicionadas });
+  return sondasPosicionadas;
 };
 
 export const extraiPlanalto = instrucoes => {
@@ -26,3 +27,5 @@ export const extraiSondas = instrucoes => {
   }
   return sondas;
 };
+
+export const posicionaSondas = sonda => sonda;
