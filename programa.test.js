@@ -79,3 +79,13 @@ test("posicionaSondaSemMovimento", () => {
   let result = processaInstrucoes("100 100 S");
   expect(result).toBe("100 100 S");
 });
+
+test("sondaPousouForaDoPlanalto", () => {
+  let result = processaInstrucoes("2 2\n3 3 S");
+  expect(result).toBe("SONDA ACIDENTADA");
+});
+
+test("sondaSaiuDoPlanalto", () => {
+  let result = processaInstrucoes("2 2\n2 2 N\nM");
+  expect(result).toBe("SONDA ACIDENTADA");
+});
