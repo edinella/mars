@@ -1,7 +1,7 @@
 body {
   background: #435d70;
   color: #97aebf;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 3%;
   text-align: center;
@@ -28,6 +28,8 @@ textarea {
   border-radius: 5px;
   padding: 10px 5%;
   width: 85%;
+  font-family: "Source Code Pro", monospace;
+  font-weight: 400;
 }
 textarea#saida {
   background: #223744;
