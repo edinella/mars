@@ -47,3 +47,7 @@ button {
 .column {
   flex: 50%;
 }
+footer {
+  padding: 50px;
+  font-size: 14px;
+}
