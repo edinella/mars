@@ -1,91 +1,122 @@
-import { extraiPlanalto, extraiSondas, processaInstrucoes } from "./programa";
+import {
+  extraiPlanalto,
+  extraiSondas,
+  processaInstrucoes,
+  posicionaSonda
+} from "./programa";
 
 let testString = "5 7\n1 2 N\nLMLMLMLMM\n3 3 E\nMMRMMRMRRM";
 
 test("extraiPlanalto", () => {
-  let result = extraiPlanalto(testString);
-  expect(result).toMatchObject({ x: 5, y: 7 });
+  let resultado = extraiPlanalto(testString);
+  expect(resultado).toMatchObject({ x: 5, y: 7 });
 });
 
 test("extraiPlanaltoMultidigito", () => {
-  let result = extraiPlanalto("888 777");
-  expect(result).toMatchObject({ x: 888, y: 777 });
+  let resultado = extraiPlanalto("888 777");
+  expect(resultado).toMatchObject({ x: 888, y: 777 });
 });
 
 test("extraiSondas", () => {
-  let result = extraiSondas(testString);
-  expect(result).toMatchObject([
+  let resultado = extraiSondas(testString);
+  expect(resultado).toMatchObject([
     { x: 1, y: 2, d: "N", comandos: "LMLMLMLMM" },
     { x: 3, y: 3, d: "E", comandos: "MMRMMRMRRM" }
   ]);
 });
 
 test("processaInstrucoes", () => {
-  let result = processaInstrucoes(testString);
-  expect(result).toBe("1 3 N\n5 1 E");
+  let resultado = processaInstrucoes(testString);
+  expect(resultado).toBe("Sonda 1:\n1 3 N\n\nSonda 2:\n5 1 E\n");
 });
 
 test("sondaViraR", () => {
-  let result = processaInstrucoes("4 4 N\nR");
-  expect(result).toBe("4 4 E");
+  let planalto = { x: 4, y: 4 };
+  let sonda = { x: 4, y: 4, d: "N", comandos: "R" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toMatchObject({ x: 4, y: 4, d: "E" });
 });
 
 test("sondaViraL", () => {
-  let result = processaInstrucoes("0 0 N\nL");
-  expect(result).toBe("0 0 W");
+  let planalto = { x: 4, y: 4 };
+  let sonda = { x: 4, y: 4, d: "N", comandos: "L" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toMatchObject({ x: 4, y: 4, d: "W" });
 });
 
 test("sondaViraRL", () => {
-  let result = processaInstrucoes("1 2 N\nRL");
-  expect(result).toBe("1 2 N");
+  let planalto = { x: 4, y: 4 };
+  let sonda = { x: 4, y: 4, d: "N", comandos: "RRL" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toMatchObject({ x: 4, y: 4, d: "E" });
 });
 
 test("sondaViraRRRR", () => {
-  let result = processaInstrucoes("0 0 W\nRRRR");
-  expect(result).toBe("0 0 W");
+  let planalto = { x: 4, y: 4 };
+  let sonda = { x: 0, y: 0, d: "N", comandos: "RRRR" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toMatchObject({ x: 0, y: 0, d: "N" });
 });
 
 test("sondaViraLLLL", () => {
-  let result = processaInstrucoes("0 0 N\nLLLL");
-  expect(result).toBe("0 0 N");
+  let planalto = { x: 4, y: 4 };
+  let sonda = { x: 4, y: 4, d: "N", comandos: "LLLL" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toMatchObject({ x: 4, y: 4, d: "N" });
 });
 
 test("sondaMoveN", () => {
-  let result = processaInstrucoes("0 0 N\nM");
-  expect(result).toBe("0 1 N");
+  let planalto = { x: 4, y: 4 };
+  let sonda = { x: 0, y: 0, d: "N", comandos: "M" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toMatchObject({ x: 0, y: 1, d: "N" });
 });
 
 test("sondaMoveE", () => {
-  let result = processaInstrucoes("0 0 E\nM");
-  expect(result).toBe("1 0 E");
+  let planalto = { x: 4, y: 4 };
+  let sonda = { x: 0, y: 0, d: "E", comandos: "M" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toMatchObject({ x: 1, y: 0, d: "E" });
 });
 
 test("sondaMoveS", () => {
-  let result = processaInstrucoes("8 7 S\nM");
-  expect(result).toBe("8 6 S");
+  let planalto = { x: 4, y: 4 };
+  let sonda = { x: 4, y: 4, d: "S", comandos: "M" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toMatchObject({ x: 4, y: 3, d: "S" });
 });
 
 test("sondaMoveW", () => {
-  let result = processaInstrucoes("2 3 W\nM");
-  expect(result).toBe("1 3 W");
+  let planalto = { x: 4, y: 4 };
+  let sonda = { x: 4, y: 4, d: "W", comandos: "M" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toMatchObject({ x: 3, y: 4, d: "W" });
 });
 
 test("sondaMoveCoordenadaMultidigito", () => {
-  let result = processaInstrucoes("100 100 S\nM");
-  expect(result).toBe("100 99 S");
+  let planalto = { x: 100, y: 100 };
+  let sonda = { x: 100, y: 100, d: "S", comandos: "M" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toMatchObject({ x: 100, y: 99, d: "S" });
 });
 
 test("posicionaSondaSemMovimento", () => {
-  let result = processaInstrucoes("100 100 S");
-  expect(result).toBe("100 100 S");
+  let planalto = { x: 100, y: 100 };
+  let sonda = { x: 100, y: 100, d: "N", comandos: "" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toMatchObject({ x: 100, y: 100, d: "N" });
 });
 
 test("sondaPousouForaDoPlanalto", () => {
-  let result = processaInstrucoes("2 2\n3 3 S");
-  expect(result).toBe("SONDA ACIDENTADA");
+  let planalto = { x: 2, y: 2 };
+  let sonda = { x: 2, y: 3, d: "N", comandos: "" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toBe("[POUSOU FORA DO PLANALTO]");
 });
 
 test("sondaSaiuDoPlanalto", () => {
-  let result = processaInstrucoes("2 2\n2 2 N\nM");
-  expect(result).toBe("SONDA ACIDENTADA");
+  let planalto = { x: 2, y: 2 };
+  let sonda = { x: 0, y: 0, d: "N", comandos: "MMMM" };
+  let resultado = posicionaSonda(sonda, planalto);
+  expect(resultado).toBe("[ACIDENTOU-SE SAINDO DO PLANALTO EM 0 3]");
 });

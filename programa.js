@@ -1,12 +1,10 @@
 /*eslint no-cond-assign: "error"*/
 
-export const SONDA_ACIDENTADA = {};
-
 export const processaInstrucoes = instrucoes => {
   let planalto = extraiPlanalto(instrucoes);
   let sondas = extraiSondas(instrucoes);
   let sondasPosicionadas = sondas.map(sonda => posicionaSonda(sonda, planalto));
-  console.log({ planalto, sondas, sondasPosicionadas });
+  // console.log({ planalto, sondas, sondasPosicionadas });
   // formata a saída novamente para string, uma sonda por linha
   return sondasPosicionadas.map(sondaResponde).join("\n");
 };
@@ -43,7 +41,7 @@ export const posicionaSonda = (sonda, planalto) => {
     planalto.y !== undefined;
   if (temPlanalto) {
     if (x < 0 || y < 0 || x > planalto.x || y > planalto.y) {
-      return SONDA_ACIDENTADA;
+      return "[POUSOU FORA DO PLANALTO]";
     }
   }
   // converte direção em número para poder calcular
@@ -86,11 +84,13 @@ export const posicionaSonda = (sonda, planalto) => {
   });
   // converte direção em letra novamente
   d = bussola[direcaoNumerica];
-  return sondaOk ? { x, y, d } : SONDA_ACIDENTADA;
+  return sondaOk
+    ? { x, y, d }
+    : `[ACIDENTOU-SE SAINDO DO PLANALTO EM ${x} ${y}]`;
 };
 
-export const sondaResponde = sonda => {
-  return sonda === SONDA_ACIDENTADA
-    ? "SONDA ACIDENTADA"
-    : `${sonda.x} ${sonda.y} ${sonda.d}`;
+export const sondaResponde = (sonda, index) => {
+  return typeof sonda === "string"
+    ? `Sonda ${index + 1}:\n${sonda}`
+    : `Sonda ${index + 1}:\n${sonda.x} ${sonda.y} ${sonda.d}\n`;
 };
